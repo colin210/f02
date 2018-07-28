@@ -1,16 +1,11 @@
 # coding: utf-8
 from flask import Flask, render_template, request,send_from_directory
-from flask_bootstrap  import  Bootstrap
-from nameForm import NameForm
 import time, os
-
-app = Flask(__name__)
-app.debug = True
-app.config['SECRET_KEY'] = 'colin'
-bootstrap = Bootstrap(app)
+from . import main
+from .forms import NameForm
 
 
-@app.route('/',  methods=['GET', 'POST'])
+@main.route('/',  methods=['GET', 'POST'])
 def index():
     name = None
     form = NameForm()
@@ -20,12 +15,12 @@ def index():
     return render_template('user.html', form=form, name=name)
 
 
-@app.route('/user/<name>')
+@main.route('/user/<name>')
 def user(name):
     return render_template('user.html',name=name)
 
 
-@app.route('/upload', methods=['POST'])
+@main.route('/upload', methods=['POST'])
 def upload():
     fname = request.files.get('file')
     if fname :
@@ -37,7 +32,7 @@ def upload():
         return '{"msg": "请上传文件！"}'
 
 
-@app.route('/getfiles', methods=['GET'])
+@main.route('/getfiles', methods=['GET'])
 def getfiles():
     fpath = request.values.get('fpath', '')
     print(fpath)
@@ -47,7 +42,7 @@ def getfiles():
     return str(files)
 
 
-@app.route('/download', methods=['get'])
+@main.route('/download', methods=['get'])
 def download():
     fpath = request.values.get('path', '') #获取文件路径
     fname = request.values.get('filename', '')  #获取文件名
@@ -60,6 +55,3 @@ def download():
     else:
         return '{"msg":"请输入参数"}'
 
-
-if __name__ == '__main__':
-    app.run()

@@ -4,3 +4,4 @@ flask_bootstrap
 flask-sqlalchemy
 requests
 send_from_directory
+flask_script
