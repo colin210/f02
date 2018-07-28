@@ -5,3 +5,4 @@ flask-sqlalchemy
 requests
 send_from_directory
 flask_script
+flask_login
