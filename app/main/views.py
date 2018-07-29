@@ -1,8 +1,12 @@
 # coding: utf-8
 from flask import Flask, render_template, request,send_from_directory
-import time, os
+import time
+import os
 from . import main
 from .forms import NameForm
+from .. import db
+from ..models import User
+
 
 
 @main.route('/',  methods=['GET', 'POST'])
