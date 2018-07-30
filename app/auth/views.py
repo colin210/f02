@@ -1,9 +1,11 @@
 from flask import render_template,redirect,request,url_for,flash
-from flask_login import login_user
 from . import auth
 from ..models import User
-from .forms import LoginForm
-from flask_login import login_user,login_required
+from .forms import LoginForm,RegistrationForm
+from flask_login import login_user,login_required,logout_user
+from app import db
+
+
 
 @auth.route('/login', methods=['GET','POST'])
 def login():
@@ -19,6 +21,19 @@ def login():
     print('sss')
     return render_template('auth/login.html',form=form)
 
+
+@auth.route('/register',methods=['GET','POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                    username=form.username.data,
+                    password=form.password.data)
+        print(user)
+        db.session.add(user)
+        # db.session.commit()
+        return redirect(url_for('auth.login'))
+    return render_template('auth/register.html',form=form)
 
 @auth.route('/login1')
 def login1():

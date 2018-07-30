@@ -17,6 +17,7 @@ def index():
         name = form.name.data
         form.name.data = ''
     return render_template('user.html', form=form, name=name)
+    # return render_template('user.html', form=form, name=name)
 
 
 @main.route('/user/<name>')
