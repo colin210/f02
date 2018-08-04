@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title  %}Add{% endblock %}
+
+{% block page_content %}
+    <p>
+    Add Qa?
+    <a href="{{ url_for('info.add')}}">
+        Click  here to add!
+    </a>
+</p>
+    <div class="page-header">
+        <h1>add</h1>
+    </div>
+    <div class="col-md-4">
+        {{ wtf.quick_form(form)  }}
+    </div>
+    <p>
+    Look qa?
+    <a href="{{ url_for('info.index')}}">
+        Click  here to check!
+    </a>
+    </p>
+
+{% endblock %}
