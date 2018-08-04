@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title  %}Phone{% endblock %}
+{% block title  %}Select_phone{% endblock %}
 
 {% block page_content %}
     <table class="table table-bordered">
@@ -10,7 +10,6 @@
         <th>操作系统</th>
         <th>手机年份</th>
         <th>手机品牌</th>
-        <th>操作</th>
 
 
     </tr>
@@ -20,7 +19,6 @@
                 <td>{{ i.machine_os }}</td>
                 <td>{{ i.machine_year }}</td>
                 <td>{{ i.machine_pinpai }}</td>
-                <td><a href="{{ url_for('phone.delphone',id = i.id) }}" >删除该手机</a></td>
             </tr>
     {% endfor %}
     </table>
@@ -28,8 +26,6 @@
         {{ wtf.quick_form(form)  }}
     </div>
 
-    <div class="col-md-4">
-        {{ wtf.quick_form(selectForm)  }}
-    </div>
+
 
 {% endblock %}

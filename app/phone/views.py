@@ -1,44 +1,57 @@
 from flask import render_template,redirect,request,url_for,flash
-from . import info
-from ..models import Qa
-from .forms import QaForm
+from . import phone
+from .models import Phone
+from .forms import PhoneForm, SelectPhoneForm
 from app import db
 
 
-@info.route('/index',methods=['GET','POST'])
+@phone.route('/index',methods=['GET','POST'])
 def index():
-    form = QaForm()
-    if form.validate_on_submit():
-        qa = Qa(name=form.name.data,
-                    age=form.age.data)
-        db.session.add(qa)
-    qa_all = Qa.query.all()
-    print(qa_all)
-    return render_template('info/index.html',qa_all=qa_all, form=form)
+    form = PhoneForm()
+    if form.validate_on_submit() :
+        phone = Phone(machine_os=form.machine_os.data,
+                      machine_year=form.machine_year.data,
+                      machine_pinpai= form.machine_pinpai.data)
+        db.session.add(phone)
+    phone_all = Phone.query.all()
+    return render_template('phone/index.html',phone_all=phone_all, form=form)
 
 
 
+@phone.route('/check',methods=['GET','POST'])
+def check():
+    form = SelectPhoneForm()
+    if form.validate_on_submit() :
+        machine_os = form.machine_os.data,
+        machine_pinpai = form.machine_pinpai.data
+        phone_all = Phone.query.filter_by(machine_os=machine_os,machine_pinpai = machine_pinpai).all()
 
-@info.route('/add',methods=['GET','POST'])
+        return render_template('phone/check.html', phone_all=phone_all, form = form)
+    return render_template('phone/check.html', form=form)
+
+
+
+@phone.route('/add',methods=['GET','POST'])
 def add():
-    form = QaForm()
+    form = PhoneForm()
     if form.validate_on_submit():
-        qa = Qa(name=form.name.data,
-                    age=form.age.data)
-        db.session.add(qa)
-        return redirect(url_for('info.add'))
-    return render_template('info/add.html',form=form)
+        phone = Phone(machine_os=form.machine_os.data,
+                      machine_year=form.machine_year.data,
+                      machine_pinpai=form.machine_pinpai.data)
+        db.session.add(phone)
+        return redirect(url_for('phone.add'))
+    return render_template('phone/add.html',form=form)
 
 
-@info.route('/delqa/<id>',methods=['GET','POST'])
-def delqa(id):
-    qa_del = Qa.query.get(id)
-    if qa_del:
+@phone.route('/delphone/<id>',methods=['GET','POST'])
+def delphone(id):
+    phone_del = Phone.query.get(id)
+    if phone_del:
         try:
-            db.session.delete(qa_del)
+            db.session.delete(phone_del)
             db.session.commit()
         except Exception as e:
             print(e)
             db.session.rollback()
-    return redirect(url_for('info.index'))
+    return redirect(url_for('phone.index'))
 

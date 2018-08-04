@@ -30,3 +30,16 @@ class User(db.Model,UserMixin):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+
+
+
+class Qa(db.Model,UserMixin):
+    __tablename__ = 'Qa'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), index=True)
+    age = db.Column(db.String(128))
+
+    def __repr__(self):
+        return '<Qa :%s %s>' % (self.name,self.age)
+
+

@@ -13,6 +13,7 @@ login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
 
 
+
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
@@ -22,7 +23,12 @@ def create_app(config_name):
     login_manager.init_app(app)
     from .main import main as main_blueprint
     from .auth import auth as auth_blueprint
+    from .info import info as info_blueprint
+    from .phone import phone as phone_blueprint
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    app.register_blueprint(info_blueprint, url_prefix='/info')
+    app.register_blueprint(phone_blueprint, url_prefix='/phone')
+
 
     return app

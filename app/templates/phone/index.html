@@ -1,28 +1,33 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title  %}QA{% endblock %}
+{% block title  %}Phone{% endblock %}
 
 {% block page_content %}
     <table class="table table-bordered">
     <tr>
 {#        <th>用户ID</th>#}
-        <th>用户名字</th>
-        <th>用户年纪</th>
+        <th>操作系统</th>
+        <th>手机年份</th>
+        <th>手机品牌</th>
         <th>操作</th>
 
+
     </tr>
-        {% for i in qa_all %}
+        {% for i in phone_all %}
             <tr>
 {#                <td>{{ i.id }} </td>#}
-                <td>{{ i.name }}</td>
-                <td>{{ i.age }}</td>
-                <td><a href="{{ url_for('info.delqa',id = i.id) }}" >删除</a></td>
+                <td>{{ i.machine_os }}</td>
+                <td>{{ i.machine_year }}</td>
+                <td>{{ i.machine_pinpai }}</td>
+                <td><a href="{{ url_for('phone.delphone',id = i.id) }}" >删除该手机</a></td>
             </tr>
     {% endfor %}
     </table>
     <div class="col-md-4">
         {{ wtf.quick_form(form)  }}
     </div>
+
+
 
 {% endblock %}
