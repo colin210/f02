@@ -40,6 +40,6 @@ class Qa(db.Model, UserMixin):
     phone = db.relationship('Phone', backref='Qa')
 
     def __repr__(self):
-        return '<Qa :%s %s>' % (self.name, self.age)
+        return '<Qa :%s %s %s>' % (self.name, self.age, self.id)
 
 

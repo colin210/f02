@@ -3,19 +3,22 @@ from . import phone
 from .models import Phone
 from .forms import PhoneForm, SelectPhoneForm,PhoneFormEdit
 from app import db
+from ..models import Qa
 
 
-@phone.route('/index',methods=['GET','POST'])
+@phone.route('/index',methods=['GET', 'POST'])
 def index():
     form = PhoneForm()
     if form.validate_on_submit():
+        a = Qa.query.filter_by(name=form.machine_owner.data).first()
         phone = Phone(machine_os=form.machine_os.data,
                       machine_year=form.machine_year.data,
                       machine_pinpai=form.machine_pinpai.data,
-                      machine_owner=form.machine_owner.data)
+                      machine_owner=form.machine_owner.data,
+                      qa_id=a.id)
         db.session.add(phone)
     phone_all = Phone.query.all()
-    print(phone_all)
+    # print(phone_all)
     return render_template('phone/index.html', phone_all=phone_all, form=form)
 
 
@@ -77,10 +80,10 @@ def add():
         phone = Phone(machine_os=form.machine_os.data,
                       machine_year=form.machine_year.data,
                       machine_pinpai=form.machine_pinpai.data,
-                      machine_onwer=form.machine_owner.data)
+                      machine_owner=form.machine_owner.data)
         db.session.add(phone)
         return redirect(url_for('phone.add'))
-    return render_template('phone/add.html',form=form)
+    return render_template('phone/add.html', form=form)
 
 
 @phone.route('/delphone/<id>',methods=['GET','POST'])
@@ -103,6 +106,8 @@ def edit(id):
                          machine_year = phone_edit.machine_year,
                          machine_pinpai = phone_edit.machine_pinpai,
                          machine_owner = phone_edit.machine_owner)
+    a = Qa.query.filter_by(name=form.machine_owner.data).first()
+
     if phone_edit:
         try:
             if form.validate_on_submit():
@@ -110,13 +115,14 @@ def edit(id):
                 phone_edit.machine_year = form.machine_year.data
                 phone_edit.machine_pinpai = form.machine_pinpai.data
                 phone_edit.machine_owner = form.machine_owner.data
+                phone_edit.qa_id = a.id
                 db.session.add(phone_edit)
                 db.session.commit()
                 return redirect(url_for('phone.index'))
         except Exception as e:
             print(e)
             db.session.rollback()
-    return render_template('phone/edit.html',form=form)
+    return render_template('phone/edit.html', form=form)
 
 
 
