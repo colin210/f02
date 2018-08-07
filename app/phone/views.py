@@ -1,7 +1,7 @@
 from flask import render_template,redirect,request,url_for,flash
 from . import phone
 from .models import Phone
-from .forms import PhoneForm, SelectPhoneForm
+from .forms import PhoneForm, SelectPhoneForm,PhoneFormEdit
 from app import db
 
 
@@ -54,4 +54,25 @@ def delphone(id):
             print(e)
             db.session.rollback()
     return redirect(url_for('phone.index'))
+
+
+@phone.route('/edit/<id>',methods=['GET','POST'])
+def edit(id):
+    phone_edit = Phone.query.get(id)
+    form = PhoneFormEdit(machine_os = phone_edit.machine_os,machine_year = phone_edit.machine_year,machine_pinpai = phone_edit.machine_pinpai)
+    if phone_edit:
+        try:
+            if form.validate_on_submit():
+                phone_edit.machine_os = form.machine_os.data
+                phone_edit.machine_year = form.machine_year.data
+                phone_edit.machine_pinpai = form.machine_pinpai.data
+                db.session.add(phone_edit)
+                db.session.commit()
+                return redirect(url_for('phone.index'))
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+    return render_template('phone/edit.html',form=form)
+
+
 
