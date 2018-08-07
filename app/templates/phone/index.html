@@ -10,6 +10,7 @@
         <th>操作系统</th>
         <th>手机年份</th>
         <th>手机品牌</th>
+        <th>所有者</th>
         <th>删除</th>
         <th>修改</th>
 
@@ -22,6 +23,7 @@
                 <td>{{ i.machine_os }}</td>
                 <td>{{ i.machine_year }}</td>
                 <td>{{ i.machine_pinpai }}</td>
+                <td>{{ i.machine_owner }}</td>
                 <td><a href="{{ url_for('phone.delphone',id = i.id) }}" >删除该手机</a></td>
                 <td><a href="{{ url_for('phone.edit',id = i.id) }}" >修改信息</a></td>
 

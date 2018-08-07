@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from . import login_manager
+# from .phone.models import  Phone
 
 
 @login_manager.user_loader
@@ -9,7 +10,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model,UserMixin):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128), unique=True, index=True)
@@ -31,15 +32,14 @@ class User(db.Model,UserMixin):
         return check_password_hash(self.password_hash, password)
 
 
-
-
-class Qa(db.Model,UserMixin):
+class Qa(db.Model, UserMixin):
     __tablename__ = 'Qa'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), index=True)
     age = db.Column(db.String(128))
+    phone = db.relationship('Phone', backref='Qa')
 
     def __repr__(self):
-        return '<Qa :%s %s>' % (self.name,self.age)
+        return '<Qa :%s %s>' % (self.name, self.age)
 
 

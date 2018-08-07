@@ -8,13 +8,15 @@ from app import db
 @phone.route('/index',methods=['GET','POST'])
 def index():
     form = PhoneForm()
-    if form.validate_on_submit() :
+    if form.validate_on_submit():
         phone = Phone(machine_os=form.machine_os.data,
                       machine_year=form.machine_year.data,
-                      machine_pinpai= form.machine_pinpai.data)
+                      machine_pinpai=form.machine_pinpai.data,
+                      machine_owner=form.machine_owner.data)
         db.session.add(phone)
     phone_all = Phone.query.all()
-    return render_template('phone/index.html',phone_all=phone_all, form=form)
+    print(phone_all)
+    return render_template('phone/index.html', phone_all=phone_all, form=form)
 
 
 
@@ -22,9 +24,46 @@ def index():
 def check():
     form = SelectPhoneForm()
     if form.validate_on_submit() :
-        machine_os = form.machine_os.data,
         machine_pinpai = form.machine_pinpai.data
-        phone_all = Phone.query.filter_by(machine_os=machine_os,machine_pinpai = machine_pinpai).all()
+        machine_owner = form.machine_owner.data
+        machine_os = form.machine_os.data,
+
+        b1 = form.b1.data
+        b2 = form.b2.data
+        b3 = form.b3.data
+
+        if b1:
+            if b2:
+                if b3:
+                    phone_all = Phone.query.filter_by(machine_os=machine_os,
+                                                      machine_pinpai=machine_pinpai,
+                                                      machine_owner=machine_owner).all()
+                else:
+                    phone_all = Phone.query.filter_by(machine_pinpai=machine_pinpai,
+                                                      machine_owner=machine_owner).all()
+            else:
+                if b3:
+                    phone_all = Phone.query.filter_by(machine_os=machine_os,
+                                                      machine_pinpai=machine_pinpai,
+                                                      ).all()
+                else:
+                    phone_all = Phone.query.filter_by(machine_pinpai=machine_pinpai
+                                                      ).all()
+        else:
+            if b2:
+                if b3:
+                    phone_all = Phone.query.filter_by(machine_os=machine_os,
+                                                      machine_owner=machine_owner).all()
+                else:
+                    phone_all = Phone.query.filter_by(machine_owner=machine_owner).all()
+            else:
+                if b3:
+                    phone_all = Phone.query.filter_by(machine_os=machine_os
+                                                      ).all()
+
+        # phone_all = Phone.query.filter_by(machine_os=machine_os,
+        #                                   machine_pinpai=machine_pinpai,
+        #                                   machine_owner=machine_owner).all()
 
         return render_template('phone/check.html', phone_all=phone_all, form = form)
     return render_template('phone/check.html', form=form)
@@ -37,7 +76,8 @@ def add():
     if form.validate_on_submit():
         phone = Phone(machine_os=form.machine_os.data,
                       machine_year=form.machine_year.data,
-                      machine_pinpai=form.machine_pinpai.data)
+                      machine_pinpai=form.machine_pinpai.data,
+                      machine_onwer=form.machine_owner.data)
         db.session.add(phone)
         return redirect(url_for('phone.add'))
     return render_template('phone/add.html',form=form)
@@ -56,16 +96,20 @@ def delphone(id):
     return redirect(url_for('phone.index'))
 
 
-@phone.route('/edit/<id>',methods=['GET','POST'])
+@phone.route('/edit/<id>', methods=['GET','POST'])
 def edit(id):
     phone_edit = Phone.query.get(id)
-    form = PhoneFormEdit(machine_os = phone_edit.machine_os,machine_year = phone_edit.machine_year,machine_pinpai = phone_edit.machine_pinpai)
+    form = PhoneFormEdit(machine_os = phone_edit.machine_os,
+                         machine_year = phone_edit.machine_year,
+                         machine_pinpai = phone_edit.machine_pinpai,
+                         machine_owner = phone_edit.machine_owner)
     if phone_edit:
         try:
             if form.validate_on_submit():
                 phone_edit.machine_os = form.machine_os.data
                 phone_edit.machine_year = form.machine_year.data
                 phone_edit.machine_pinpai = form.machine_pinpai.data
+                phone_edit.machine_owner = form.machine_owner.data
                 db.session.add(phone_edit)
                 db.session.commit()
                 return redirect(url_for('phone.index'))
