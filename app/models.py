@@ -2,7 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from . import login_manager
-# from .phone.models import  Phone
+from .phone.models import Phone
 
 
 @login_manager.user_loader
@@ -39,7 +39,10 @@ class Qa(db.Model, UserMixin):
     age = db.Column(db.String(128))
     phone = db.relationship('Phone', backref='Qa')
 
+    # @staticmethod
+    def phonecount(self, id):
+        return '%s' % (Phone.query.filter_by(qa_id=id).count())
+
     def __repr__(self):
         return '<Qa :%s %s %s>' % (self.name, self.age, self.id)
-
 

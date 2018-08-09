@@ -1,9 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,SubmitField,SelectField,BooleanField
-from wtforms.validators import Required,Length
+from wtforms import StringField,SubmitField, SelectField, BooleanField
+from wtforms.validators import Required, Length
 from .models import Phone
-from ..models import Qa
-import itertools
 
 
 class PhoneForm(FlaskForm):
@@ -13,7 +11,9 @@ class PhoneForm(FlaskForm):
     machine_pinpai = StringField('pinpai', validators=[Required(), Length(1, 64)])
     submit = SubmitField('Add')
 
-    def __init__(self,*args,**kwargs):
+    def __init__(self, *args, **kwargs):
+        from ..models import Qa
+
         super(PhoneForm, self).__init__(*args, **kwargs)
         a = [(v.name, v.name) for v in Qa.query.all()]
         qa_choice = list(set(a))
@@ -28,6 +28,8 @@ class PhoneFormEdit(FlaskForm):
     submit = SubmitField('Change')
 
     def __init__(self,*args,**kwargs):
+        from ..models import Qa
+
         super(PhoneFormEdit, self).__init__(*args, **kwargs)
         a = [(v.name, v.name) for v in Qa.query.all()]
         qa_choice = list(set(a))

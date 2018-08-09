@@ -11,19 +11,32 @@
         <th>用户年纪</th>
         <th>删除</th>
         <th>编辑</th>
-
-
+        <th>拥有手机</th>
     </tr>
+
         {% for i in qa_all %}
             <tr>
-{#                <td>{{ i.id }} </td>#}
                 <td>{{ i.name }}</td>
                 <td>{{ i.age }}</td>
                 <td><a href="{{ url_for('info.delqa',id = i.id) }}" >删除</a></td>
                 <td><a href="{{ url_for('info.edit',id = i.id) }}" >编辑</a></td>
+                <td><a href="{{ url_for('info.phone',id = i.id) }}" >{{ i.phonecount(i.id) }}</a></td>
 
             </tr>
-    {% endfor %}
+{#            <tr>#}
+{#                <td>{{ i.name }}</td>#}
+{#                <td>{{ i.age }}</td>#}
+{#                <td><a href="{{ url_for('info.delqa',id = i.id) }}" >删除</a></td>#}
+{#                <td><a href="{{ url_for('info.edit',id = i.id) }}" >编辑</a></td>#}
+{#                <td><a href="{{ url_for('info.phone',id = i.id) }}" >{{ i }}</a></td>#}
+{#            </tr>#}
+
+
+        {% endfor %}
+
+
+
+
     </table>
     <div class="col-md-4">
         {{ wtf.quick_form(form)  }}

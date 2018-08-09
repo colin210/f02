@@ -3,11 +3,13 @@ from . import phone
 from .models import Phone
 from .forms import PhoneForm, SelectPhoneForm,PhoneFormEdit
 from app import db
-from ..models import Qa
+# from ..models import Qa
 
 
 @phone.route('/index',methods=['GET', 'POST'])
 def index():
+    from ..models import Qa
+
     form = PhoneForm()
     if form.validate_on_submit():
         a = Qa.query.filter_by(name=form.machine_owner.data).first()
@@ -26,7 +28,7 @@ def index():
 @phone.route('/check',methods=['GET','POST'])
 def check():
     form = SelectPhoneForm()
-    if form.validate_on_submit() :
+    if form.validate_on_submit():
         machine_pinpai = form.machine_pinpai.data
         machine_owner = form.machine_owner.data
         machine_os = form.machine_os.data,
@@ -72,8 +74,7 @@ def check():
     return render_template('phone/check.html', form=form)
 
 
-
-@phone.route('/add',methods=['GET','POST'])
+@phone.route('/add', methods=['GET', 'POST'])
 def add():
     form = PhoneForm()
     if form.validate_on_submit():
@@ -86,7 +87,7 @@ def add():
     return render_template('phone/add.html', form=form)
 
 
-@phone.route('/delphone/<id>',methods=['GET','POST'])
+@phone.route('/delphone/<id>', methods=['GET','POST'])
 def delphone(id):
     phone_del = Phone.query.get(id)
     if phone_del:
@@ -99,13 +100,15 @@ def delphone(id):
     return redirect(url_for('phone.index'))
 
 
-@phone.route('/edit/<id>', methods=['GET','POST'])
+@phone.route('/edit/<id>', methods=['GET', 'POST'])
 def edit(id):
+    from ..models import Qa
+
     phone_edit = Phone.query.get(id)
-    form = PhoneFormEdit(machine_os = phone_edit.machine_os,
-                         machine_year = phone_edit.machine_year,
-                         machine_pinpai = phone_edit.machine_pinpai,
-                         machine_owner = phone_edit.machine_owner)
+    form = PhoneFormEdit(machine_os=phone_edit.machine_os,
+                         machine_year=phone_edit.machine_year,
+                         machine_pinpai=phone_edit.machine_pinpai,
+                         machine_owner=phone_edit.machine_owner)
     a = Qa.query.filter_by(name=form.machine_owner.data).first()
 
     if phone_edit:
