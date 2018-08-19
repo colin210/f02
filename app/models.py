@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from . import login_manager
 from .phone.models import Phone
+from .leader.models import Leader
 
 
 @login_manager.user_loader
@@ -39,10 +40,16 @@ class Qa(db.Model, UserMixin):
     age = db.Column(db.String(128))
     group_name = db.Column(db.String(128))
     phone = db.relationship('Phone', backref='Qa')
+    leader = db.Column(db.String(128))
 
     # @staticmethod
     def phonecount(self, id):
         return '%s' % (Phone.query.filter_by(qa_id=id).count())
+
+    def my_leader(self, group_name):
+        leader_info = Leader.query.filter_by(group_name=group_name).first()
+        my_leader_name = leader_info.name
+        return '%s' % my_leader_name
 
     def __repr__(self):
         return '<Qa :%s %s %s %s>' % (self.name, self.age, self.id, self.group_name)

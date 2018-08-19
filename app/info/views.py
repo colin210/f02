@@ -10,9 +10,14 @@ from ..phone.models import Phone
 def index():
     form = QaForm()
     if form.validate_on_submit():
+
+        gd = form.group_name.data
+        leader = Qa.my_leader(Qa, gd)
+
         qa = Qa(name=form.name.data,
                 age=form.age.data,
-                group_name=form.group_name.data
+                group_name=form.group_name.data,
+                leader=leader
                 )
         db.session.add(qa)
     qa_all = Qa.query.all()

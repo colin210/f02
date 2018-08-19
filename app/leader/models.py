@@ -19,5 +19,13 @@ class Leader(db.Model, UserMixin):
             # self.city)
 
 
+    def my_xiashu(self, name):
+        from ..models import Qa
 
+        xiashu_info = Qa.query.filter_by(leader=name).all()
+        xiashu = []
+        for i in xiashu_info:
+            xiashu.append(i.name)
+
+        return '%s' % xiashu
 

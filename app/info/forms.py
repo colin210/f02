@@ -11,6 +11,7 @@ class QaForm(FlaskForm):
     age = StringField('Age', validators=[Required(),Length(1, 64)])
     group_name = SelectField('Group', choices=GROUP_INFO)
 
+
     submit = SubmitField('Add')
 
 

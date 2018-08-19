@@ -10,6 +10,7 @@
         <th>组名</th>
         <th>组长</th>
         <th>年龄</th>
+        <th>下属</th>
         <th>删除</th>
         <th>修改</th>
 
@@ -21,6 +22,7 @@
                 <td>{{ i.group_name }}</td>
                 <td>{{ i.name }}</td>
                 <td>{{ i.age }}</td>
+                <td>{{ i.my_xiashu(i.name) }}</td>
                 <td><a href="{{ url_for('leader.delleader',id = i.id) }}" >删除组</a></td>
                 <td><a href="{{ url_for('leader.edit',id = i.id) }}" >修改信息</a></td>
 
