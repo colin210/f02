@@ -8,7 +8,7 @@ class Phone(db.Model, UserMixin):
     machine_os = db.Column(db.String(128))
     machine_year = db.Column(db.String(128))
     machine_pinpai = db.Column(db.String(128))
-    machine_owner = db.Column(db.String(128))
+    machine_owner = db.Column(db.String(256))
     qa_id = db.Column(db.Integer, db.ForeignKey('Qa.id'))
 
     def __repr__(self):

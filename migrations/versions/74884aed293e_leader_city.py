@@ -1,8 +1,8 @@
-"""change qa add phonecount 
+"""leader city
 
-Revision ID: 0216e0472b44
-Revises: ffa6534935fd
-Create Date: 2018-08-09 15:16:18.786135
+Revision ID: 74884aed293e
+Revises: a7545b155624
+Create Date: 2018-08-19 16:06:11.377202
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0216e0472b44'
-down_revision = 'ffa6534935fd'
+revision = '74884aed293e'
+down_revision = 'a7545b155624'
 branch_labels = None
 depends_on = None
 

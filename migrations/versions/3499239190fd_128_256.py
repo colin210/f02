@@ -1,8 +1,8 @@
-"""add qa id 
+"""128-256
 
-Revision ID: ffa6534935fd
-Revises: 9d2ee23c2c09
-Create Date: 2018-08-07 23:55:57.850621
+Revision ID: 3499239190fd
+Revises: e0bec68453e6
+Create Date: 2018-08-19 15:59:00.271574
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ffa6534935fd'
-down_revision = '9d2ee23c2c09'
+revision = '3499239190fd'
+down_revision = 'e0bec68453e6'
 branch_labels = None
 depends_on = None
 

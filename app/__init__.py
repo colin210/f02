@@ -25,10 +25,13 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     from .info import info as info_blueprint
     from .phone import phone as phone_blueprint
+    from .leader import leader as leader_blueprint
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(info_blueprint, url_prefix='/info')
     app.register_blueprint(phone_blueprint, url_prefix='/phone')
+    app.register_blueprint(leader_blueprint, url_prefix='/leader')
+
 
 
     return app
