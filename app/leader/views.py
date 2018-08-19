@@ -12,6 +12,7 @@ def index():
         leader_info = Leader(group_name=form.group_name.data,
                             age=form.age.data,
                             name=form.name.data)
+
         db.session.add(leader_info)
     leader_all = Leader.query.all()
 

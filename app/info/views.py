@@ -1,7 +1,7 @@
 from flask import render_template,redirect,request,url_for,flash
 from . import info
 from ..models import Qa
-from .forms import QaForm,QaFormEdit
+from .forms import QaForm
 from app import db
 from ..phone.models import Phone
 
@@ -11,7 +11,9 @@ def index():
     form = QaForm()
     if form.validate_on_submit():
         qa = Qa(name=form.name.data,
-                age=form.age.data)
+                age=form.age.data,
+                group_name=form.group_name.data
+                )
         db.session.add(qa)
     qa_all = Qa.query.all()
 
@@ -26,7 +28,9 @@ def add():
     form = QaForm()
     if form.validate_on_submit():
         qa = Qa(name=form.name.data,
-                    age=form.age.data)
+                age=form.age.data,
+                group_name=form.group_name.data
+                )
         db.session.add(qa)
         return redirect(url_for('info.add'))
     return render_template('info/add.html', form=form)
@@ -35,12 +39,13 @@ def add():
 @info.route('/edit/<id>',methods=['GET','POST'])
 def edit(id):
     qa_edit = Qa.query.get(id)
-    form = QaFormEdit(name=qa_edit.name, age=qa_edit.age)
+    form = QaForm(name=qa_edit.name, age=qa_edit.age)
     if qa_edit:
         try:
             if form.validate_on_submit():
                 qa_edit.name = form.name.data,
                 qa_edit.age = form.age.data,
+                qa_edit.group_name=form.group_name.data
                 db.session.add(qa_edit)
                 db.session.commit()
                 return redirect(url_for('info.index'))

@@ -7,6 +7,7 @@
     <table class="table table-bordered">
     <tr>
 {#        <th>用户ID</th>#}
+        <th>组名</th>
         <th>用户名字</th>
         <th>用户年纪</th>
         <th>删除</th>
@@ -16,6 +17,7 @@
 
         {% for i in qa_all %}
             <tr>
+                <td>{{ i.group_name }}</td>
                 <td>{{ i.name }}</td>
                 <td>{{ i.age }}</td>
                 <td><a href="{{ url_for('info.delqa',id = i.id) }}" >删除</a></td>

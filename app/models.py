@@ -37,6 +37,7 @@ class Qa(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), index=True)
     age = db.Column(db.String(128))
+    group_name = db.Column(db.String(128))
     phone = db.relationship('Phone', backref='Qa')
 
     # @staticmethod
@@ -44,5 +45,5 @@ class Qa(db.Model, UserMixin):
         return '%s' % (Phone.query.filter_by(qa_id=id).count())
 
     def __repr__(self):
-        return '<Qa :%s %s %s>' % (self.name, self.age, self.id)
+        return '<Qa :%s %s %s %s>' % (self.name, self.age, self.id, self.group_name)
 
