@@ -7,7 +7,7 @@ class Leader(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     group_name = db.Column(db.String(128))
     name = db.Column(db.String(256))
-    age = db.Column(db.String(256))
+    age = db.Column(db.String(128))
     # city = db.Column(db.String(256))
 
     def __repr__(self):

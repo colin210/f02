@@ -5,5 +5,12 @@ from wtforms.validators import Required, Length
 
 
 class LeaderForm(FlaskForm):
-    pass
+    group_name = StringField('Group')
+    age = StringField('age')
+    name = StringField('name', validators=[Required()])
+    submit = SubmitField('Add')
+
+
+
+
 

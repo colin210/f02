@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title  %}Phone{% endblock %}
+
+{% block page_content %}
+    <table class="table table-bordered">
+    <tr>
+{#        <th>用户ID</th>#}
+        <th>组名</th>
+        <th>组长</th>
+        <th>年龄</th>
+        <th>删除</th>
+        <th>修改</th>
+
+
+    </tr>
+        {% for i in leader_all %}
+            <tr>
+{#                <td>{{ i.id }} </td>#}
+                <td>{{ i.group_name }}</td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.age }}</td>
+                <td><a href="{{ url_for('leader.delleader',id = i.id) }}" >删除组</a></td>
+                <td><a href="{{ url_for('leader.edit',id = i.id) }}" >修改信息</a></td>
+
+            </tr>
+    {% endfor %}
+    </table>
+    <div class="col-md-4">
+        {{ wtf.quick_form(form)  }}
+    </div>
+
+
+
+{% endblock %}

@@ -3,6 +3,7 @@ from app import create_app, db
 from app.models import User
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
+# from app.leader.models import Leader
 
 app = create_app('default')
 manager = Manager(app)
